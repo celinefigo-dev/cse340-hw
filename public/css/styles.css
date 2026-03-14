@@ -3,4 +3,566 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+
+}
+
+:root {
+  --white: #fff;
+  --p-background: #276ba2;
+  --s-background: #4C5154;
+  --highlight: hsl(146, 49%, 25%);
+  --beige: #fdf5ea;
+  --black: #000;
+  --ash: #d9d9d9;
+}
+
+body {
+  background-color: var(--white);
+  padding: 0;
+  margin: 0;
+}
+
+#wrapper {
+  margin: 0;
+  background-color: var(--white);
+  padding: 20px;
+}
+
+/* Header  */
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.siteName a {
+  font-size: 30px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--black);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#tools a {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#tools a:hover {
+  text-decoration: underline;
+  color: var(--highlight);
+}
+
+/* Navigation */
+#wrapper nav ul {
+  padding: 20px;
+  background-color: var(--p-background);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  list-style-type: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#wrapper nav li {
+  color: var(--white);
+  font-size: 14px;
+}
+
+#wrapper nav li a {
+  color: var(--white);
+  text-decoration: none;
+}
+
+#wrapper nav li a:hover {
+  color: var(--highlight);
+}
+
+/* Hero Section */
+.hero {
+  background: url('/images/vehicles/delorean-tn.jpg') left/cover no-repeat;
+  padding: 1rem;
+  height: 500px;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.hero-caption {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.hero h1 {
+  font-size: 25px;
+  color: var(--black);
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero h2 {
+  font-size: 20px;
+  color: var(--p-background);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero p {
+  color: var(--p-background);
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cta-btn {
+  display: block;
+  margin: auto;
+  padding: 10px 20px;
+  background-color: var(--highlight);
+  color: var(--black);
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cta-btn:hover {
+  background-color: var(--p-background);
+  color: var(--white);
+}
+
+/* Car Specs */
+.car-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.car-col h2 {
+  margin-bottom: 20px;
+  color: var(--p-background);
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.upgrade-card {
+  background-color: var(--p-background);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.upgrade-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.upgrade-card p {
+  color: var(--white);
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.review-list {
+  list-style-type: disc;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--black);
+}
+
+/* Classification Grid */
+#inv-display {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+#inv-display li {
+  border: 1px solid var(--ash);
+  border-radius: 8px;
+  padding: 1rem;
+  /* background-color: var(--beige); */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+#inv-display li:hover {
+  transform: scale(1.02);
+}
+
+#inv-display img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.namePrice {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.namePrice h2 {
+  font-size: 18px;
+  margin: 0.5rem 0;
+  color: var(--p-background);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.namePrice span {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--s-background);
+}
+
+/* Details page styling */
+.vehicle-detail {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.vehicle-detail .vehicle-img img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.vehicle-detail .vehicle-info {
+  flex: 1;
+  max-width: 600px;
+}
+
+.vehicle-info h2,
+.vehicle-info h3 {
+  margin-top: 0;
+}
+
+.vehicle-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.vehicle-info li {
+  margin-bottom: 0.5rem;
+}
+
+/* Form container */
+.form {
+  margin: auto;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form .form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form .form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 16px;
+  color: var(--s-background);
+}
+
+.form .form-input {
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 300;
+  border: 1.5px solid var(--ash);
+  color: var(--s-background);
+  transition: border-color 0.25s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form .form-input:focus {
+  outline: none;
+  border-color: var(--highlight);
+}
+
+.form .checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+  user-select: none;
+  color: var(--s-background);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form .checkbox-input {
+  cursor: pointer;
+}
+
+.form .form-hint {
+  display: block;
+  margin-top: 10px;
+  font-size: 14x;
+  color: var(--s-background);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn {
+  width: 100%;
+  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn-primary {
+  background-color: var(--p-background);
+  color: var(--white);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--highlight);
+  outline: none;
+}
+
+/* Error list */
+.error-list {
+  padding: 5px 10px;
+  margin-bottom: 1.5rem;
+  color: var(--highlight);
+  list-style-type: disc;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Register link container */
+.register {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--s-background);
+  text-align: center;
+}
+
+.register .link {
+  font-size: 14px;
+  color: var(--p-background);
+  text-decoration: none;
+}
+
+.register .link:hover,
+.register .link:focus {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--p-background);
+  text-align: center;
+}
+
+.notice {
+  background-color: var(--highlight);
+  color: var(--black);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+/* Account dashboard */
+.account-dashboard {
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.account-dashboard h2 {
+  font-size: 1.5rem;
+  color: var(--p-background);
+  text-align: center;
+}
+
+.account-dashboard .intro {
+  font-size: 1rem;
+  text-align: center;
+  color: var(--s-background);
+}
+
+.account-info h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--s-background);
+}
+
+.account-info ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.account-info li {
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.account-actions a {
+  text-decoration: none;
+}
+
+.account-actions .btn {
+  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  max-width: 300px;
+}
+
+.btn.secondary {
+  background-color: var(--s-background);
+  color: var(--white);
+}
+
+.btn.secondary:hover {
+  background-color: #3c3f41;
+}
+
+.btn.danger {
+  background-color: #e74c3c;
+  color: var(--white);
+}
+
+.btn.danger:hover {
+  background-color: #c0392b;
+}
+
+.management-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--p-background);
+}
+
+.account-login-prompt {
+  text-align: center;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.account-login-prompt h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--s-background);
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    background: url('../images/site/checkerboard.jpg');
+    background-size: 500px;
+    background-attachment: fixed;
+  }
+
+  #wrapper {
+    background-color: var(--white);
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+    border: solid 5px var(--p-background);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #top-header {
+    padding: 1.5rem 3rem;
+  }
+
+  .hero {
+    padding: 2rem;
+    background: url('/images/vehicles/delorean.jpg') left/cover no-repeat;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+    margin-bottom: 50px;
+  }
+
+  .hero h2 {
+    font-size: 22px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .car-specs {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .car-col {
+    width: 48%;
+  }
+
+  .upgrade-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #inv-display {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .form {
+    max-width: 420px;
+  }
 }
