@@ -1,1 +1,34 @@
-<h1>Celine Mafigu</h1>
+<%- include('partials/hero') %>
+<%- include('partials/car-specs', {
+  car: {
+    name: 'DMC Delorean',
+    upgrades: [
+        { name: 'Flux Capacitor', image: '/images/upgrades/flux-cap.png' },
+        { name: 'Flame Decals', image: '/images/upgrades/flame.jpg' },
+        { name: 'Bumper Stickers', image: '/images/upgrades/bumper_sticker.jpg' },
+        { name: 'Hub Caps', image: '/images/upgrades/hub-cap.jpg' }
+    ],
+    reviews: [
+        {
+            text: "So fast it's almost like travelling in time.", 
+            rating: "4/5",
+        },
+        {
+            text: "Coolest ride on the road.", 
+            rating: "4/5",
+        }, 
+        {
+            text: "I'm feeling McFly!", 
+            rating: "5/5", 
+        }, 
+        {
+            text: "The most futuristic ride of our day.", 
+            rating: "4.5/5", 
+        }, 
+        {
+            text: "80's living and I love it!", 
+            rating: "5/5", 
+        }
+    ]
+  }
+}) %>
