@@ -1,7 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = require("../utilities/")
 const utilities = require("../utilities/")
-const rating = require("../models/ratingModel")
+const ratingModel = require("../models/ratingModel")
 
 // If your file is named ratingModel.js
 // const ratingModel = require('../models/ratingModel');
