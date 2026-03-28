@@ -1,568 +1,372 @@
 /******* Change Box Model ***************/
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    transition: all 0.3s ease;
+@media only screen and (min-width: 45rem) {
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    nav {
+        width: 100%;
+        margin-top: 5%;
+        background-color: #000000;
+    }
+
+    nav ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    nav a {
+        color: aliceblue;
+        padding: 10px 15px;
+        display: block;
+    }
+
+    nav a:hover {
+        background-color: rgb(112, 109, 109);
+    }
 
-}
-
-:root {
-    --white: #fff;
-    --p-background: #276ba2;
-    --s-background: #4C5154;
-    --highlight: #F1C40F;
-    --beige: #fdf5ea;
-    --black: #000;
-    --ash: #d9d9d9;
-}
-
-body {
-    background-color: var(--white);
-    padding: 0;
-    margin: 0;
-}
-
-#wrapper {
-    margin: 0;
-    background-color: var(--white);
-    padding: 20px;
-}
-
-/* Header  */
-#top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.siteName a {
-    font-size: 30px;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--black);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#tools a {
-    font-size: 18px;
-    text-transform: uppercase;
-    color: var(--black);
-    text-decoration: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#tools a:hover {
-    text-decoration: underline;
-    color: var(--highlight);
-}
-
-/* Navigation */
-#wrapper nav ul {
-    padding: 20px;
-    background-color: var(--p-background);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    list-style-type: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#wrapper nav li {
-    color: var(--white);
-    font-size: 14px;
-}
-
-#wrapper nav li a {
-    color: var(--white);
-    text-decoration: none;
-}
-
-#wrapper nav li a:hover {
-    color: var(--highlight);
-}
-
-/* Hero Section */
-.hero {
-    background: url('/images/vehicles/delorean-tn.jpg') left/cover no-repeat;
-    padding: 1rem;
-    height: 500px;
-    color: var(--white);
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.hero-caption {
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 20px;
-    border-radius: 4px;
-}
-
-.hero h1 {
-    font-size: 25px;
-    color: var(--black);
-    margin-bottom: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.hero h2 {
-    font-size: 20px;
-    color: var(--p-background);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.hero p {
-    color: var(--p-background);
-    font-size: 16px;
-    margin-bottom: 10px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.cta-btn {
-    display: block;
-    margin: auto;
-    padding: 10px 20px;
-    background-color: var(--highlight);
-    color: var(--black);
-    font-size: 14px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.cta-btn:hover {
-    background-color: var(--p-background);
-    color: var(--white);
-}
-
-/* Car Specs */
-.car-specs {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-.car-col h2 {
-    margin-bottom: 20px;
-    color: var(--p-background);
-}
-
-.upgrade-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.upgrade-card {
-    background-color: var(--p-background);
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.upgrade-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.upgrade-card p {
-    color: var(--white);
-    font-size: 18px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.review-list {
-    list-style-type: disc;
-}
-
-.review-item {
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--black);
-}
-
-/* Classification Grid */
-#inv-display {
-    list-style-type: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
-#inv-display li {
-    border: 1px solid var(--ash);
-    border-radius: 8px;
-    padding: 1rem;
-    /* background-color: var(--beige); */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
-
-#inv-display li:hover {
-    transform: scale(1.02);
-}
-
-#inv-display img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-}
-
-.namePrice {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.namePrice h2 {
-    font-size: 18px;
-    margin: 0.5rem 0;
-    color: var(--p-background);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.namePrice span {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--s-background);
-}
-
-/* Details page styling */
-.vehicle-detail {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    padding: 2rem;
-    flex-wrap: wrap;
-}
-
-.vehicle-detail .vehicle-img img {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 8px;
-}
-
-.vehicle-detail .vehicle-info {
-    flex: 1;
-    max-width: 600px;
-}
-
-.vehicle-info h2,
-.vehicle-info h3 {
-    margin-top: 0;
-}
-
-.vehicle-info ul {
-    list-style: none;
-    padding: 0;
-}
-
-.vehicle-info li {
-    margin-bottom: 0.5rem;
-}
-
-/* Form container */
-.form {
-    margin: auto;
-    background: var(--white);
-    padding: 20px;
-    box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
-    width: 100%;
-    max-width: 400px;
-}
-
-.form .form-group {
-    margin-bottom: 1.2rem;
-}
-
-.form .form-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    font-size: 16px;
-    color: var(--s-background);
-}
-
-.form .form-input {
-    width: 100%;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 300;
-    border: 1.5px solid var(--ash);
-    color: var(--s-background);
-    transition: border-color 0.25s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.form .form-input:focus {
-    outline: none;
-    border-color: var(--highlight);
-}
-
-.form .checkbox-label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    gap: 0.4rem;
-    margin-top: 0.3rem;
-    user-select: none;
-    color: var(--s-background);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.form .checkbox-input {
-    cursor: pointer;
-}
-
-.form .form-hint {
-    display: block;
-    margin-top: 10px;
-    font-size: 14x;
-    color: var(--s-background);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.btn {
-    width: 100%;
-    font-weight: 600;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.25s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.btn-primary {
-    background-color: var(--p-background);
-    color: var(--white);
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: var(--highlight);
-    outline: none;
-}
-
-/* Error list */
-.error-list {
-    padding: 5px 10px;
-    margin-bottom: 1.5rem;
-    color: var(--highlight);
-    list-style-type: disc;
-    max-width: 380px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Register link container */
-.register {
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--s-background);
-    text-align: center;
-}
-
-.register .link {
-    font-size: 14px;
-    color: var(--p-background);
-    text-decoration: none;
-}
-
-.register .link:hover,
-.register .link:focus {
-    text-decoration: underline;
-}
-
-.title {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--p-background);
-    text-align: center;
-}
-
-.notice {
-    background-color: var(--highlight);
-    color: var(--black);
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-}
-
-/* Account dashboard */
-.account-dashboard {
-    background-color: var(--white);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.account-dashboard h2 {
-    font-size: 1.5rem;
-    color: var(--p-background);
-    text-align: center;
-}
-
-.account-dashboard .intro {
-    font-size: 1rem;
-    text-align: center;
-    color: var(--s-background);
-}
-
-.account-info h4 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--s-background);
-}
-
-.account-info ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.account-info li {
-    font-size: 16px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-
-.account-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-}
-
-.account-actions a {
-    text-decoration: none;
-}
-
-.account-actions .btn {
-    font-weight: 600;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.25s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 100%;
-    max-width: 300px;
-}
-
-.btn.secondary {
-    background-color: var(--s-background);
-    color: var(--white);
-}
-
-.btn.secondary:hover {
-    background-color: #3c3f41;
-}
-
-.btn.danger {
-    background-color: #e74c3c;
-    color: var(--white);
-}
-
-.btn.danger:hover {
-    background-color: #c0392b;
-}
-
-.management-section h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--p-background);
-}
-
-.account-login-prompt {
-    text-align: center;
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-.account-login-prompt h2 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: var(--s-background);
-}
-
-@media screen and (min-width: 768px) {
     body {
-        background: url('../images/site/checkerboard.jpg');
-        background-size: 500px;
-        background-attachment: fixed;
+        background-image: url(/images/site/small_check.jpg)
     }
 
-    #wrapper {
-        background-color: var(--white);
-        max-width: 1000px;
-        margin: 2rem auto;
-        padding: 2rem;
-        border-radius: 10px;
-        border: solid 5px var(--p-background);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    h2 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 2em;
+        display: flex;
     }
 
-    #top-header {
-        padding: 1.5rem 3rem;
+    a {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1em;
+    }
+
+    p {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.5em;
+    }
+
+    li {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.5em;
+    }
+
+    /* Class Selectors */
+    .siteName {
+        font-weight: bold;
+        font-size: 100%;
     }
 
     .hero {
-        padding: 2rem;
-        background: url('/images/vehicles/delorean.jpg') left/cover no-repeat;
+        position: relative;
     }
 
-    .hero h1 {
-        font-size: 40px;
-        margin-bottom: 50px;
+    .hero picture img {
+        width: 100%;
     }
 
-    .hero h2 {
-        font-size: 22px;
+    .hero div {
+        background-color: rgb(255, 255, 255, 0.5);
+        position: absolute;
+        bottom: 5%;
+        left: 5%;
+        padding: 5px;
+        width: 40%;
+        text-align: center;
+        overflow: auto;
     }
 
-    .hero p {
-        font-size: 18px;
+
+    .image-button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+
     }
 
-    .car-specs {
-        flex-direction: row;
+    .image-button img {
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+    .box {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+
+    .box a {
+        display: block;
+        margin-top: 8px;
+        text-align: center;
+        list-style: none;
+        color: black;
+        background-color: white;
+        height: 100%;
+    }
+
+    /* IDs*/
+    #wrapper {
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        margin: 40px;
+        border-radius: 15px;
+        border-width: 35px;
+        border: 5px solid #3498db;
+    }
+
+    #menu {
+        background-color: black;
+        display: flex;
         justify-content: space-between;
+        list-style: none;
+        margin: 0;
+        padding: 0;
     }
 
-    .car-col {
-        width: 48%;
+    #menu {
+        margin: 0 0px;
     }
 
-    .upgrade-grid {
-        grid-template-columns: repeat(2, 1fr);
+    #menu a {
+        color: aliceblue;
+        padding: 10px 15px;
+        display: block;
     }
 
-    #inv-display {
-        grid-template-columns: repeat(3, 1fr);
+    #menu a:hover {
+        background-color: rgb(112, 109, 109);
     }
 
-    .form {
-        max-width: 420px;
+    #sectors {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    #upgrades {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    #upgrades .box {
+        text-align: center;
+        background-color: #3498db;
+        text-align: center;
+    }
+
+    #upgrades .title {
+        grid-column: 1 / span 2;
+        text-align: left;
+    }
+
+    #reviews {
+        grid-column: 2 / 3;
+        grid-row: 1 / -1;
+    }
+
+    #reviews h2 {
+        margin-bottom: 10px;
+
+    }
+
+    #reviews ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+    }
+
+    #reviews li {
+        margin-bottom: 10px;
     }
 }
+
+
+/*Inventory Classification View*/
+ul#inv-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 25px;
+    list-style-type: none;
+    margin: 0;
+}
+
+ul#inv-display li {
+    border: 3px solid #000000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: -8px 9px 20px rgba(0, 0, 0, 0.7);
+    background-color: #fff;
+}
+
+ul#inv-display li a {
+    display: block;
+}
+
+ul#inv-display li img {
+    width: 100%;
+    height: auto;
+}
+
+ul#inv-display li .namePrice {
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+ul#inv-display li h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+}
+
+ul#inv-display li span {
+    font-size: 16px;
+    color: #103dd2;
+    font-weight: bold;
+    text-align: center !important;
+    display: block;
+}
+
+ul#inv-display li .namePrice hr {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+/* Item Details Section */
+.detail {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.image {
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.item-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.detail h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #000000;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.detail p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #103dd2;
+}
+
+.detail p+p {
+    margin-top: 8px;
+}
+
+
+
+/*Login*/
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.notice {
+    background-color: #ffcccb;
+    color: #721c24;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    list-style: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    margin: 0 auto;
+    background-color: #0079FA;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+label {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 15px;
+    padding: 8px;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+form button:hover {
+    background-color: #000000;
+    color: #ccc;
+}
+
+/*p {
+  text-align: center;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a:hover {
+  text-decoration: underline;
+}*/
