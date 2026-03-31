@@ -1,192 +1,143 @@
-const accountModel = require("../models/account-model")
-const utilities = require(".")
-  const { body, validationResult } = require("express-validator")
-  const validate = {}
+const { body, validationResult } = require("express-validator")
+const invModel = require("../models/inventory-model")
+const validate = {}
 
-  
-  /*  **********************************
-  *  Inventory ADD CLASS Data Validation Rules
-  * ********************************* */
-validate.addClassRules = () => {
-    return [
-        // class_name is required and must have no leading or trailing spaces and no special characters of any kind
-        body("classification_name")
-        .trim()
-        .escape()
-        .notEmpty()
-        .isLength({ min: 3 })
-        .isAlphanumeric()
-        .withMessage("Please provide a valid classification name.")
-    ]
-}
-  /* ******************************
- * Check data and return errors or continue to add
- * ***************************** */
-validate.checkAddClassData = async (req, res, next) => {
-    console.log("in checkAddClassData")
-    const {classification_name} = req.body
-    let errors = []
-    errors = validationResult(req)
-    console.log("errors", errors)
-    if(!errors.isEmpty()){
-        let nav = await utilities.getNav()
-        res.render("inventory/add-classification",{
-        errors,
-        title: "Add New Classification",
-        nav,
-        classification_name
-        })
-        return
-    }
-next()
+/* **********************************
+  * Classification Validation Rules
+  * ********************************** */
+validate.classificationRules = () => {
+  return [
+    // classification_name is required and must not contain spaces or special characters
+    body("classification_name")
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide a classification name.")
+      .matches(/^[a-zA-Z0-9]+$/)
+      .withMessage("Classification name cannot contain spaces or special characters. Only letters and numbers are allowed."),
+  ]
 }
 
-  /*  **********************************
-  *  Inventory ADD INVENTORY Data Validation Rules
-  * ********************************* */
-validate.addInvRules = () => {
-console.log("in addInvRules")
-    return [
-        // class_name is required and must have no leading or trailing spaces and no special characters of any kind
-    body("classification_id")
-    .trim()
-    .escape()
-    .notEmpty()
-    .withMessage("The selected classification name cannot be used or was not selected."),
-    // inv_make is required and length > 3, no special characters
+/* **************************
+  * Check Classification Data
+  * ************************* */
+validate.checkClassification = (req, res, next) => {
+  const { errors } = validationResult(req)
+  if (!errors.length) {
+    return next()
+  }
+  let nav
+  utilities = require("./index")
+  nav = utilities.getNav()
+  return res.render("inventory/add-classification", {
+    errors,
+    title: "Add Classification",
+    nav,
+  })
+}
+
+/* **************************
+  * Check Inventory Data
+  * ************************* */
+validate.checkInventory = async (req, res, next) => {
+  const { errors } = validationResult(req)
+  if (!errors.length) {
+    return next()
+  }
+  let nav
+  utilities = require("./index")
+  nav = await utilities.getNav()
+  const classificationList = await utilities.buildClassificationList(req.body.classification_id)
+  return res.render("inventory/add-vehicle", {
+    errors,
+    title: "Add Vehicle",
+    nav,
+    classificationList,
+    inv_make: req.body.inv_make,
+    inv_model: req.body.inv_model,
+    inv_year: req.body.inv_year,
+    inv_description: req.body.inv_description,
+    inv_price: req.body.inv_price,
+    inv_miles: req.body.inv_miles,
+    inv_color: req.body.inv_color,
+    classification_id: req.body.classification_id,
+  })
+}
+
+/* **********************************
+  * New Inventory Validation Rules
+  * ********************************** */
+validate.inventoryRules = () => {
+  return [
+    // inv_make is required and must be string
     body("inv_make")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 3 })
-    .isAlphanumeric()
-    .withMessage("The vehicle make has no appropriate value."),
-    // inv_model is required and length > 3, no special characters
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Please provide a make."),
+
+    // inv_model is required and must be string
     body("inv_model")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({min:3})
-    .matches(/^[a-zA-Z0-9 ]+$/)
-    // .isAlphanumeric()
-    .withMessage("The vehicle model has no appropriate value."),
-    // inv_year must be four digits
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Please provide a model."),
+
+    // inv_year is required and must be a valid year (4 digits)
     body("inv_year")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isNumeric()
-    .isLength({min:4, max:4})
-    .withMessage("The vehicle year has not appropriate value."),
-    // inv_description, trim, escape, not empty, 
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide a year.")
+      .isLength({ min: 4, max: 4 })
+      .withMessage("Year must be 4 digits."),
+
+    // inv_description is required
     body("inv_description")
-    .trim()
-    .escape()
-    .notEmpty()
-    .withMessage("The vehicle description is not the appropriate value."),
-    // Image path must be '/images/vehicles/*.mime, no https, no http, no special characters except for / and .
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide a description."),
+
+    // inv_image is required
     body("inv_image")
-    .trim()
-    .notEmpty()
-    .matches(/^\/images\/vehicles\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png)$/)
-    .withMessage("The vehicle image path is not the appropriate value."),
-    // inv_thumbnail, trim, escape, not empty,
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide an image path."),
+
+    // inv_thumbnail is required
     body("inv_thumbnail")
-    .trim()
-    .notEmpty()
-    .matches(/^\/images\/vehicles\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png)$/)
-    .withMessage("The vehicle thumbnail is not the appropriate value."),
-    // inv_price, trim, escape, not empty, numeric, no commas, no special characters
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide a thumbnail path."),
+
+    // inv_price is required and must be a number
     body("inv_price")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isNumeric()
-    // .isCurrency()
-    .withMessage("The vehicle price is not the appropriate value."),
-    // inv_miles, trim, escape, not empty, numeric, no commas, no special characters
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide a price.")
+      .isNumeric()
+      .withMessage("Price must be a number."),
+
+    // inv_miles is required and must be a number
     body("inv_miles")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isNumeric()
-    .withMessage("The vehicle miles is not the appropriate value."),
-    // inv_color, trim, escape, not empty, no special characters, no numbers
+      .trim()
+      .notEmpty()
+      .withMessage("Please provide miles.")
+      .isNumeric()
+      .withMessage("Miles must be a number."),
+
+    // inv_color is required
     body("inv_color")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isAlpha()
-    .withMessage("The vehicle color is not the appropriate value."),
-    ]
-}
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Please provide a color."),
 
-
-    /* ******************************
- * Check data and return errors 
- * ***************************** */
-validate.checkAddInvData = async (req, res, next) => {
-    console.log("in checkAddInvData")
-    const {classification_id, inv_make, inv_model, inv_year, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color} = req.body 
-    let errors = []
-    errors = validationResult(req)
-    console.log("errors", errors)
-    if(!errors.isEmpty()){
-        let nav = await utilities.getNav()
-        let classDrop = await utilities.buildClassificationDropdown()
-        res.render("inventory/add-inventory.ejs",{
-            errors,
-            title: "Add New Inventory",
-            nav,
-            classDrop,
-            classification_id,
-            inv_make,
-            inv_model,
-            inv_year,
-            inv_image,
-            inv_thumbnail,
-            inv_price,
-            inv_miles,
-            inv_color
-        })
-        return
-    }
-    next()
-}
-
-
-
-    /* ******************************
- * Check update data and return errors 
- * ***************************** */
-validate.checkUpdateData = async (req, res, next) => {
-    const {inv_id,classification_id, inv_make, inv_model, inv_year, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color} = req.body 
-    const itemName = `${inv_make} ${inv_model}`
-    let errors = []
-    errors = validationResult(req)
-    console.log("errors", errors)
-    if(!errors.isEmpty()){
-        let nav = await utilities.getNav()
-        let classDrop = await utilities.buildClassificationDropdown()
-        res.render("inventory/edit-inventory.ejs",{
-            errors,
-            title: `Edit ${itemName} inventory`,
-            nav,
-            classDrop,
-            inv_id,
-            classification_id,
-            inv_make,
-            inv_model,
-            inv_year,
-            inv_image,
-            inv_thumbnail,
-            inv_price,
-            inv_miles,
-            inv_color
-        })
-        return
-    }
-    next()
+    // classification_id is required
+    body("classification_id")
+      .notEmpty()
+      .withMessage("Please select a classification.")
+      .isNumeric()
+      .withMessage("Classification must be selected."),
+  ]
 }
 
 module.exports = validate

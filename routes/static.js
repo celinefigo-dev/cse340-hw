@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const staticController = require('../controllers/staticController')
+const baseController = require('../controllers/baseController')
 
-// Static files
+// Static Routes
+// Set up "public" folder / subfolders for static files
 router.use(express.static("public"));
-
-// Routes
-router.get("/", staticController.buildHome)
-router.get("/about", staticController.buildAbout)
-router.get("/contact", staticController.buildContact)
+router.use("/css", express.static(__dirname + "public/css"));
+router.use("/js", express.static(__dirname + "public/js"));
+router.use("/images", express.static(__dirname + "public/images"));
+router.get('/dont-exit', baseController.triggerError)
 
 module.exports = router;
+
+
