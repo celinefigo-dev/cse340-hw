@@ -1,117 +1,120 @@
 /* ******************************************
- * This server.js file is the primary file of the 
+ * This server.js file is the primary file of the
  * application. It is used to control the project.
  *******************************************/
 /* ***********************
  * Require Statements
  *************************/
-const express = require("express")
-const expressLayouts = require("express-ejs-layouts")
-const env = require("dotenv").config()
-const app = express()
-const static = require("./routes/static")
-const baseController = require("./controllers/baseController")
-const inventoryRoute = require("./routes/inventoryRoute")
-const utilities = require("./utilities")
-const detailsRoute = require("./routes/detailsProductsRoute")
-const detailsController = require("./controllers/detailsController")
-/*NEW PATHS WEEK=04*/
-const session = require("express-session")
-const pool = require('./database/')
-const accountRoute = require("./routes/accountRoute")
-const bodyParser = require("body-parser")
-
-
-const managementRoute = require("./routes/managementRoute")
-const managementController = require("./controllers/managementController")
-
-utilities.handleErrors(baseController.buildHome)
-
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const env = require("dotenv").config();
+const app = express();
+const static = require("./routes/static");
+const baseController = require("./controllers/baseController");
+const inventoryRoute = require("./routes/inventoryRoutes");
+const appointmentRoute = require("./routes/appointmentRoute");
+const utilities = require("./utilities/index");
+const session = require("express-session");
+const pool = require("./database/");
+const accountRoute = require("./routes/accountRoute");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 /* ***********************
- * View Configuration
+ * View Engines and Templates
  *************************/
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout", "./layouts/layout")
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/layout");
+app.set("views", "./views");
 
 /* ***********************
- * Middleware 
- *************************/
-app.use(session({
-  store: new (require('connect-pg-simple')(session))({
-    createTableIfMissing: true,
-    pool,
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  name: 'sessionId',
-}))
+ * Middleware
+ * ************************/
+app.use(
+  session({
+    store: new (require("connect-pg-simple")(session))({
+      createTableIfMissing: true,
+      pool,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    name: "sessionId",
+  })
+);
+
+// For cookie
+app.use(cookieParser());
 
 // Express Messages Middleware
-app.use(require('connect-flash')())
-app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
+app.use(require("connect-flash")());
+app.use(function (req, res, next) {
+  res.locals.messages = require("express-messages")(req, res);
+  next();
+});
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
-
-// Static files
-app.use(static)
+app.use(utilities.checkJWTToken);
 
 /* ***********************
  * Routes
  *************************/
-// Index route
-app.get("/", utilities.handleErrors(baseController.buildHome))
-// Inventory routes
-app.use("/inv", inventoryRoute)
-// Details route
-app.use("/inv", detailsRoute)
-// Account Route
-app.use("/account", accountRoute)
-// Management Route
-app.use("/inv", managementRoute)
+app.use(static);
 
+// Index route
+app.get("/", utilities.handleErrors(baseController.buildHome));
+
+// Inventory Route
+app.use("/inv", inventoryRoute);
+
+// Account Route
+app.use("/account", accountRoute);
+
+//Appointment Route
+app.use("/appointments", appointmentRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
-  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
-})
+  next({
+    status: 404,
+    message: "Sorry, you must have been in the wrong direction.",
+  });
+});
 
-
-/* ***********************
-* Express Error Handler
-* Place after all other middleware
-*************************/
-app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
-  res.render("errors/error", {
-    title: err.status || 'Server Error',
-    message,
-    nav
-  })
-})
-
-
+app.use("/test", inventoryRoute);
 
 /* ***********************
- * Local Server Information36
+ * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT
-const host = process.env.HOST
+const port = process.env.PORT;
+const host = process.env.HOST;
+
+/* ***********************
+ * Express Error Handler
+ * Place after all other middleware
+ *************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav();
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  if (err.status == 404) {
+    message = err.message;
+  } else {
+    message = "Oh no! There was a crash. Maybe try a different route?";
+  }
+  res.status(err.status || 500).render("errors/error", {
+    title: err.status || "Server Error",
+    message,
+    nav,
+  });
+});
 
 /* ***********************
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`)
-})
+  console.log(`app listening on ${host}:${port}`);
+});
